@@ -1,0 +1,46 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes" controller="RedditController" access="global" >
+    <!-- Handler to call function when page is loaded initially -->
+    <aura:handler name="init" action="{!c.getRedditList}" value="{!this}" />
+    <!-- List of contacts stored in attribute -->
+    <aura:attribute name="redditList" type="List" />
+    <!-- Lightning card to show contacts -->
+	<lightning:card title="Reddit Data">
+        <!-- Body of lightning card starts here -->
+        <p class="slds-p-horizontal_small">            
+            <div class="table table--desktop">
+                <div class="table__header">
+                    <div class="row">
+                        <div class="col-3 table__cell table__cell--heading">Title</div>
+                        <div class="col-3 table__cell table__cell--heading">Author fullname</div>
+                        <div class="col-3 table__cell table__cell--heading">Thumbnail</div>
+                        <div class="col-3 table__cell table__cell--heading">Selftext</div>
+                        <div class="col-3 table__cell table__cell--heading">Action</div>
+                    </div>
+                </div>            
+                <aura:iteration items="{!v.redditList}" var="reddit">
+                    <div class="table__body">
+                    <div class="row">
+                        <div class="col-3 table__cell">
+                            <span class="cell-container">{!reddit.title__c}</span>                            
+                        </div>
+                        <div class="col-3 table__cell">
+                            <span class="cell-container">{!reddit.author_fullname__c}</span>
+                        </div>
+                        <div class="col-3 table__cell">
+                            <span class="cell-container">{!reddit.thumbnail__c}</span>
+                        </div>
+                        <div class="col-3 table__cell">
+                            <span class="cell-container">{!reddit.selftext__c}</span>
+                        </div>
+                        <div class="col-3 table__cell">                        
+                        	<lightning:button variant="destructive" label="Delete" name="{!reddit.Id}" value="{!reddit.Id}" onclick="{!c.deleteRedditItem}" aura:id="deleteRedditData"/>
+                        </div>
+                    </div>
+                    </div>
+                    <br />
+                    <!-- Line break between two records -->
+                </aura:iteration>
+            </div>
+        </p>        
+    </lightning:card>
+</aura:component>
